@@ -128,11 +128,11 @@ if __name__ == "__main__":
                 out_img.save(out_path)
 
                 if not labels:
-                    print("⚠️ Không tìm thấy khuôn mặt")
+                    print(" Không tìm thấy khuôn mặt")
                 elif "SPOOF" in labels:
-                    print(f"🚨 Phát hiện {labels.count('SPOOF')} khuôn mặt giả")
+                    print(f" Phát hiện {labels.count('SPOOF')} khuôn mặt giả")
                 else:
-                    print(f"✅ {len(labels)} khuôn mặt đều REAL")
+                    print(f"{len(labels)} khuôn mặt đều REAL")
                 print(f"Lưu kết quả tại: {out_path}")
             except Exception as e:
                 print(f"Lỗi khi xử lý model {model_name}: {e}")
