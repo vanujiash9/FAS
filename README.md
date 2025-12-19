@@ -1,43 +1,71 @@
+
 # Face Liveness Detection (PAD)
 
-**Tác giả: Bùi Thị Thanh Vân**
+**Tác giả:** Bùi Thị Thanh Vân
+
+## Mục tiêu
+Hệ thống phát hiện tấn công giả mạo khuôn mặt (Face Liveness Detection) bằng deep learning, phân biệt live/spoof từ ảnh hoặc video.
+
+## Tính năng chính
+- Huấn luyện và đánh giá các backbone: EfficientNet, ConvNeXt, ViT
+- Pipeline end-to-end: tiền xử lý, huấn luyện, inference, ensemble, báo cáo
+- Demo trực quan với Streamlit (`app.py`)
+- Hỗ trợ upload/checkpoint, lưu kết quả, vẽ biểu đồ
+
+## Cài đặt nhanh
+```bash
+# Tạo môi trường ảo (nên dùng)
+python -m venv .venv
+source .venv/bin/activate
+
+# Cài dependencies
+pip install -r requirements.txt
+
+# Chạy demo giao diện
+streamlit run app.py
+```
+
+## Cấu trúc thư mục
+- `app.py` : Giao diện demo
+- `ensemble_score.py`, `evaluate_all.py` : Script ensemble, đánh giá
+- `requirements.txt` : Thư viện cần thiết
+- `config/` : File YAML cấu hình backbone
+- `checkpoints/` : Lưu weights từng model (best.pt, last.pt)
+- `saved_models/` : Model lưu sẵn (safetensors, config)
+- `src/` : Mã nguồn chính
+  - `training/` : Script huấn luyện
+  - `inference/` : Hàm inference, phân tích
+  - `models/` : Định nghĩa model
+  - `data/` : Loader, tiền xử lý
+  - `evaluation/` : Hàm tính metric, vẽ biểu đồ
+- `scripts/` : Script tiện ích, tiền xử lý dữ liệu
+
+## Hướng dẫn sử dụng
+### Huấn luyện
+```bash
+python src/training/train_efficientnet.py --config config/efficientnet.yaml
+```
+- Thay đổi backbone hoặc config YAML tùy ý.
+
+### Đánh giá & Ensemble
+```bash
+python evaluate_all.py
+python ensemble_score.py
+```
+
+### Inference/Demo
+- Chạy `streamlit run app.py` để demo trực quan (ảnh, webcam, video)
+- Hoặc dùng `src/inference/infer_model.py` để gọi từ script
+
+## Lưu ý
+- File weights lớn (>100MB) không upload lên GitHub, chỉ lưu local hoặc upload lên Hugging Face/rclone.
+- Đảm bảo đường dẫn file trong config đúng với hệ thống của bạn.
+
+## Đóng góp & Liên hệ
+- Mọi đóng góp, câu hỏi, hoặc yêu cầu mở rộng vui lòng liên hệ qua GitHub hoặc email.
 
 ---
-
-## Phân tích 5W cho dự án
-
-**What (Cái gì?)**
-
-Dự án xây dựng hệ thống phát hiện tấn công giả mạo khuôn mặt (Face Liveness Detection/PAD) sử dụng deep learning, giúp phân biệt ảnh/video người thật (live) và giả mạo (spoof) dựa trên dữ liệu hình ảnh.
-
-**Why (Tại sao?)**
-
-Tấn công giả mạo khuôn mặt là vấn đề lớn trong xác thực sinh trắc học (ví dụ: mở khoá điện thoại, banking, check-in online). Việc phát hiện liveness giúp tăng bảo mật, giảm nguy cơ bị qua mặt bởi ảnh in, video, hoặc deepfake.
-
-**Who (Ai thực hiện? Ai sử dụng?)**
-
-- Người thực hiện: Bùi Thị Thanh Vân
-- Người dùng cuối: các hệ thống xác thực khuôn mặt, nhà phát triển AI, tổ chức cần kiểm tra liveness trong xác thực sinh trắc học.
-
-**Where (Ở đâu? Ứng dụng vào đâu?)**
-
-- Ứng dụng trong các hệ thống xác thực online, mobile banking, kiểm soát truy cập, kiosk tự động, v.v.
-- Dự án triển khai trên máy tính cá nhân, có thể mở rộng lên server hoặc cloud.
-
-**When (Khi nào? Quy trình ra sao?)**
-
-- Khi cần kiểm tra tính hợp lệ của khuôn mặt trong ảnh/video.
-- Dự án phát triển năm 2025, có thể mở rộng/ứng dụng lâu dài.
-
----
-
-## Quy trình pipeline chi tiết
-
-1. **Tiền xử lý dữ liệu**
-
-- Thu thập dữ liệu ảnh/video thật và giả mạo.
-- Tách train/test, chuẩn hoá kích thước, chuẩn hoá màu sắc (theo chuẩn ImageNet).
-- Lưu nhãn và đường dẫn ảnh vào file CSV.
+README này đã được rút gọn, tập trung hướng dẫn sử dụng và cấu trúc dự án. Nếu cần bổ sung chi tiết về từng script/config, hãy phản hồi thêm!
 
 2. **Huấn luyện mô hình**
 
