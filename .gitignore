@@ -1,0 +1,15 @@
+# Loại trừ các file và thư mục lớn/không cần thiết
+checkpoints/efficientnet/last.pt
+checkpoints/vit/last.pt
+data/data_split/
+saved_models/
+saved_models/convnext/last.pt
+saved_models/convnext_tiny_224/
+saved_models/tf_efficientnetv2_b0/
+saved_models/vit_base_patch16_224/
+__pycache__/
+*.pyc
+*.zip
+*.tar.gz
+*.db
+*.log
